@@ -6,12 +6,68 @@ const board = document.getElementById("board");
 const grid = new Grid(board);
 grid.randomEmptyCell().tile = new Tile(board);
 grid.randomEmptyCell().tile = new Tile(board);
+
 setupInput();
 
+var xDown = null;
+var yDown = null;
 function setupInput() {
-  window.addEventListener("keydown", handleInput, { once: true });
+  window.addEventListener("keydown", handleKeyboard, { once: true });
+  window.addEventListener("touchstart", handleTouchStart, false);
+  window.addEventListener("touchmove", handleTouchMove, false);
 }
-async function handleInput(e) {
+function getTouches(event) {
+  return (
+    event.touches || // browser API
+    event.originalEvent.touches
+  ); // jQuery
+}
+function handleTouchStart(event) {
+  const firstTouch = getTouches(event)[0];
+  xDown = firstTouch.clientX;
+  yDown = firstTouch.clientY;
+}
+async function handleTouchMove(event) {
+  if (!xDown || !yDown) {
+    return;
+  }
+  var xUp = event.touches[0].clientX;
+  var yUp = event.touches[0].clientY;
+
+  var xDiff = xDown - xUp;
+  var yDiff = yDown - yUp;
+
+  if (Math.abs(xDiff) > Math.abs(yDiff)) {
+    /*most significant*/
+    if (xDiff > 0) {
+      /* right swipe */
+      if (canMoveRight()) {
+        await moveRight();
+      }
+    } else {
+      /* left swipe */
+      if (canMoveLeft()) {
+        await moveLeft();
+      }
+    }
+  } else {
+    if (yDiff > 0) {
+      /* down swipe */
+      if (canMoveDown()) {
+        await moveDown();
+      }
+    } else {
+      /* up swipe */
+      if (canMoveUp()) {
+        await moveUp();
+      }
+    }
+  }
+  /* reset values */
+  xDown = null;
+  yDown = null;
+}
+async function handleKeyboard(e) {
   switch (e.key) {
     case "ArrowUp": {
       if (!canMoveUp()) {
