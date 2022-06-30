@@ -13,7 +13,11 @@
     <title>pwa2048</title>
   </head>
   <body>
-    <div id="board"></div>
+    <div>
+      <div id="board"></div>
+      <hr />
+      <div id="debug">no debug</div>
+    </div>
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", (event) => {

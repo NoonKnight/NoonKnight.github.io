@@ -2,33 +2,32 @@ import Grid from "./Grid.js";
 import Tile from "./Tile.js";
 
 const board = document.getElementById("board");
+const debug = document.getElementById("debug");
 
 const grid = new Grid(board);
 grid.randomEmptyCell().tile = new Tile(board);
 grid.randomEmptyCell().tile = new Tile(board);
-let touchstartX;
-let touchstartY;
+let touchStart = { x: 0, y: 0 };
+let touchEnd = { x: 0, y: 0 };
 setupInput();
 
 function setupInput() {
+  const { x, y } = touchEnd;
+  debug.innerText = `x: ${x - touchStart.x}, y: ${y - touchStart.y}`;
+  console.log("Swiped Left");
+
   window.addEventListener("keydown", handleKeyboard, { once: true });
-  board.addEventListener(
-    "touchstart",
-    (event) => {
-      touchstartX = event.changedTouches[0].screenX;
-      touchstartY = event.changedTouches[0].screenY;
-    },
-    false
-  );
-  board.addEventListener(
-    "touchend",
-    (event) => {
-      touchendX = event.changedTouches[0].screenX;
-      touchendY = event.changedTouches[0].screenY;
-      handleGesture();
-    },
-    false
-  );
+  board.addEventListener("touchstart", (event) => {
+    touch = event.changedTouches[0];
+    touchStart = { x: touch.clientX, y: touch.clientY };
+  });
+  board.addEventListener("touchend", (event) => {
+    touch = event.changedTouches[0];
+    touchEnd = { x: touch.clientX, y: touch.clientY };
+    const { x, y } = touchEnd;
+    debug.innerText = `x: ${x - touchStart.x}, y: ${y - touchStart.y}`;
+    handleGesture();
+  });
 }
 //async
 function handleGesture() {
