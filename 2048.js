@@ -12,7 +12,7 @@ setupInput();
 
 function setupInput() {
   window.addEventListener("keydown", handleKeyboard, { once: true });
-  touchableElement.addEventListener(
+  board.addEventListener(
     "touchstart",
     (event) => {
       touchstartX = event.changedTouches[0].screenX;
@@ -20,7 +20,7 @@ function setupInput() {
     },
     false
   );
-  touchableElement.addEventListener(
+  board.addEventListener(
     "touchend",
     (event) => {
       touchendX = event.changedTouches[0].screenX;
