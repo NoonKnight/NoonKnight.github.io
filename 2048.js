@@ -14,7 +14,6 @@ setupInput();
 function setupInput() {
   const { x, y } = touchEnd;
   debug.innerText = `x: ${x - touchStart.x}, y: ${y - touchStart.y}`;
-  console.log("Swiped Left");
 
   window.addEventListener("keydown", handleKeyboard, { once: true });
   board.addEventListener("touchstart", (event) => {
@@ -31,28 +30,29 @@ function setupInput() {
 }
 //async
 function handleGesture() {
-  if (touchendX < touchstartX) {
+  debug.innerText = `x: ${x - touchStart.x}, y: ${y - touchStart.y}`;
+  if (touchEnd.x < touchStart.x) {
     console.log("Swiped Left");
     if (canMoveLeft()) {
       //await
       moveLeft();
     }
   }
-  if (touchendX > touchstartX) {
+  if (touchEnd.x > touchStart.x) {
     console.log("Swiped Right");
     if (canMoveRight()) {
       //await
       moveRight();
     }
   }
-  if (touchendY < touchstartY) {
+  if (touchEnd.y < touchStart.y) {
     console.log("Swiped Up");
     if (canMoveUp()) {
       //await
       moveUp();
     }
   }
-  if (touchendY > touchstartY) {
+  if (touchEnd.y > touchStart.y) {
     console.log("Swiped Down");
     if (canMoveDown()) {
       //await
