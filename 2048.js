@@ -6,66 +6,63 @@ const board = document.getElementById("board");
 const grid = new Grid(board);
 grid.randomEmptyCell().tile = new Tile(board);
 grid.randomEmptyCell().tile = new Tile(board);
-
+let touchstartX;
+let touchstartY;
 setupInput();
 
-var xDown = null;
-var yDown = null;
 function setupInput() {
   window.addEventListener("keydown", handleKeyboard, { once: true });
-  window.addEventListener("touchstart", handleTouchStart, false);
-  window.addEventListener("touchmove", handleTouchMove, false);
+  touchableElement.addEventListener(
+    "touchstart",
+    (event) => {
+      touchstartX = event.changedTouches[0].screenX;
+      touchstartY = event.changedTouches[0].screenY;
+    },
+    false
+  );
+  touchableElement.addEventListener(
+    "touchend",
+    (event) => {
+      touchendX = event.changedTouches[0].screenX;
+      touchendY = event.changedTouches[0].screenY;
+      handleGesture();
+    },
+    false
+  );
 }
-function getTouches(event) {
-  return (
-    event.touches || // browser API
-    event.originalEvent.touches
-  ); // jQuery
-}
-function handleTouchStart(event) {
-  const firstTouch = getTouches(event)[0];
-  xDown = firstTouch.clientX;
-  yDown = firstTouch.clientY;
-}
-async function handleTouchMove(event) {
-  if (!xDown || !yDown) {
-    return;
-  }
-  var xUp = event.touches[0].clientX;
-  var yUp = event.touches[0].clientY;
-
-  var xDiff = xDown - xUp;
-  var yDiff = yDown - yUp;
-
-  if (Math.abs(xDiff) > Math.abs(yDiff)) {
-    /*most significant*/
-    if (xDiff > 0) {
-      /* right swipe */
-      if (canMoveRight()) {
-        await moveRight();
-      }
-    } else {
-      /* left swipe */
-      if (canMoveLeft()) {
-        await moveLeft();
-      }
-    }
-  } else {
-    if (yDiff > 0) {
-      /* down swipe */
-      if (canMoveDown()) {
-        await moveDown();
-      }
-    } else {
-      /* up swipe */
-      if (canMoveUp()) {
-        await moveUp();
-      }
+//async
+function handleGesture() {
+  if (touchendX < touchstartX) {
+    console.log("Swiped Left");
+    if (canMoveLeft()) {
+      //await
+      moveLeft();
     }
   }
-  /* reset values */
-  xDown = null;
-  yDown = null;
+  if (touchendX > touchstartX) {
+    console.log("Swiped Right");
+    if (canMoveRight()) {
+      //await
+      moveRight();
+    }
+  }
+  if (touchendY < touchstartY) {
+    console.log("Swiped Up");
+    if (canMoveUp()) {
+      //await
+      moveUp();
+    }
+  }
+  if (touchendY > touchstartY) {
+    console.log("Swiped Down");
+    if (canMoveDown()) {
+      //await
+      moveDown();
+    }
+  }
+  // if (touchendY === touchstartY) {
+  //   console.log("Tap");
+  // }
 }
 async function handleKeyboard(e) {
   switch (e.key) {
