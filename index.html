@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="./logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Progressive Web App - 2048" />
+    <link rel="apple-touch-icon" href="./logo.png" />
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="2048.js" type="module"></script>
+    <title>pwa2048</title>
+  </head>
+  <body>
+    <div id="board"></div>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", (event) => {
+          console.log('<addEventListener event="load">');
+          navigator.serviceWorker
+            .register("./sw.js")
+            .then((reg) => {
+              console.log(
+                `<navigator.serviceWorker.register reg.scope="${reg.scope}" />`
+              );
+            })
+            .catch((err) => {
+              console.log(`<navigator.serviceWorker.register err="${err}" />`);
+            });
+          console.log("</addEventListener>");
+        });
+      }
+    </script>
+  </body>
+</html>
