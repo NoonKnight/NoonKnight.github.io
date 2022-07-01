@@ -7,63 +7,77 @@ const debug = document.getElementById("debug");
 const grid = new Grid(board);
 grid.randomEmptyCell().tile = new Tile(board);
 grid.randomEmptyCell().tile = new Tile(board);
+
 let touchStart = { x: 0, y: 0 };
 let touchEnd = { x: 0, y: 0 };
-setupInput();
-
-function setupInput() {
-  window.addEventListener("keydown", handleKeyboard, { once: true });
-  document.addEventListener("touchstart", (event) => {
-    const touch = event.changedTouches[0];
-    touchStart = { x: touch.clientX, y: touch.clientY };
-  });
-  document.addEventListener("touchend", (event) => {
-    const touch = event.changedTouches[0];
-    touchEnd = { x: touch.clientX, y: touch.clientY };
-    handleGesture();
-  });
+setupTouch();
+function setupTouch() {
+  document.addEventListener(
+    "touchstart",
+    (event) => {
+      const touch = event.changedTouches[0];
+      touchStart = { x: touch.clientX, y: touch.clientY };
+    } //, { once: true }
+  );
+  document.addEventListener(
+    "touchend",
+    (event) => {
+      const touch = event.changedTouches[0];
+      touchEnd = { x: touch.clientX, y: touch.clientY };
+      handleGesture();
+    } //, { once: true }
+  );
 }
-//async
-function handleGesture() {
+
+setupKeyboard();
+function setupKeyboard() {
+  window.addEventListener("keydown", handleKeyboard, { once: true });
+}
+async function handleGesture() {
   const { x, y } = touchEnd;
-  debug.innerText = `x: ${x - touchStart.x}, y: ${y - touchStart.y}`;
+  const debugLog = (touch = "tap") => {
+    debug.innerText = `${touch}, x: ${parseFloat(
+      (x - touchStart.x).toFixed(2)
+    )}, y: ${parseFloat((y - touchStart.y).toFixed(2))}`;
+  };
   if (touchEnd.x < touchStart.x) {
-    console.log("Swiped Left");
+    debugLog("Left");
     if (canMoveLeft()) {
-      //await
-      moveLeft();
+      await moveLeft();
+      return;
     }
   }
   if (touchEnd.x > touchStart.x) {
-    console.log("Swiped Right");
+    debugLog("Right");
     if (canMoveRight()) {
-      //await
-      moveRight();
+      await moveRight();
+      return;
     }
   }
   if (touchEnd.y < touchStart.y) {
-    console.log("Swiped Up");
+    debugLog("Up");
     if (canMoveUp()) {
-      //await
-      moveUp();
+      await moveUp();
+      return;
     }
   }
   if (touchEnd.y > touchStart.y) {
-    console.log("Swiped Down");
+    debugLog("Down");
     if (canMoveDown()) {
-      //await
-      moveDown();
+      await moveDown();
+      return;
     }
   }
   // if (touchendY === touchstartY) {
   //   console.log("Tap");
   // }
+  // setupTouch();
 }
 async function handleKeyboard(e) {
   switch (e.key) {
     case "ArrowUp": {
       if (!canMoveUp()) {
-        setupInput();
+        setupKeyboard();
         return;
       }
       await moveUp();
@@ -71,7 +85,7 @@ async function handleKeyboard(e) {
     }
     case "ArrowDown": {
       if (!canMoveDown()) {
-        setupInput();
+        setupKeyboard();
         return;
       }
       await moveDown();
@@ -79,7 +93,7 @@ async function handleKeyboard(e) {
     }
     case "ArrowLeft": {
       if (!canMoveLeft()) {
-        setupInput();
+        setupKeyboard();
         return;
       }
       await moveLeft();
@@ -87,14 +101,14 @@ async function handleKeyboard(e) {
     }
     case "ArrowRight": {
       if (!canMoveRight()) {
-        setupInput();
+        setupKeyboard();
         return;
       }
       await moveRight();
       break;
     }
     default: {
-      setupInput();
+      setupKeyboard();
       return;
     }
   }
@@ -107,7 +121,7 @@ async function handleKeyboard(e) {
     });
     return;
   }
-  setupInput();
+  setupKeyboard();
 }
 function moveUp() {
   return slideTiles(grid.cellsByColumn);
