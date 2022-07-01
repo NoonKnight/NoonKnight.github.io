@@ -12,6 +12,7 @@ body {
   height: 100vh;
   margin: 0;
   font-size: 7.5vmin;
+  overscroll-behavior: contain;
 }
 #board {
   display: grid;

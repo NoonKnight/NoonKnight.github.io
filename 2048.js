@@ -34,38 +34,45 @@ function setupKeyboard() {
   window.addEventListener("keydown", handleKeyboard, { once: true });
 }
 async function handleGesture() {
-  const { x, y } = touchEnd;
+  const diff = { x: touchEnd.x - touchStart.x, y: touchEnd.y - touchStart.y };
   const debugLog = (touch = "tap") => {
     debug.innerText = `${touch}, x: ${parseFloat(
-      (x - touchStart.x).toFixed(2)
-    )}, y: ${parseFloat((y - touchStart.y).toFixed(2))}`;
+      diff.x.toFixed(2)
+    )}, y: ${parseFloat(diff.y.toFixed(2))}`;
   };
-  if (touchEnd.x < touchStart.x) {
-    debugLog("Left");
-    if (canMoveLeft()) {
-      await moveLeft();
-      return;
+  if (Math.abs(diff.x) > Math.abs(diff.y)) {
+    if (touchEnd.x < touchStart.x) {
+      debugLog("Left");
+      if (canMoveLeft()) {
+        await moveLeft();
+        postMove();
+        return;
+      }
     }
-  }
-  if (touchEnd.x > touchStart.x) {
-    debugLog("Right");
-    if (canMoveRight()) {
-      await moveRight();
-      return;
+    if (touchEnd.x > touchStart.x) {
+      debugLog("Right");
+      if (canMoveRight()) {
+        await moveRight();
+        postMove();
+        return;
+      }
     }
-  }
-  if (touchEnd.y < touchStart.y) {
-    debugLog("Up");
-    if (canMoveUp()) {
-      await moveUp();
-      return;
+  } else {
+    if (touchEnd.y < touchStart.y) {
+      debugLog("Up");
+      if (canMoveUp()) {
+        await moveUp();
+        postMove();
+        return;
+      }
     }
-  }
-  if (touchEnd.y > touchStart.y) {
-    debugLog("Down");
-    if (canMoveDown()) {
-      await moveDown();
-      return;
+    if (touchEnd.y > touchStart.y) {
+      debugLog("Down");
+      if (canMoveDown()) {
+        await moveDown();
+        postMove();
+        return;
+      }
     }
   }
   // if (touchendY === touchstartY) {
@@ -112,6 +119,10 @@ async function handleKeyboard(e) {
       return;
     }
   }
+  postMove();
+  setupKeyboard();
+}
+function postMove() {
   grid.cells.forEach((cell) => cell.mergeTiles());
   const newTile = new Tile(board);
   grid.randomEmptyCell().tile = newTile;
@@ -121,7 +132,6 @@ async function handleKeyboard(e) {
     });
     return;
   }
-  setupKeyboard();
 }
 function moveUp() {
   return slideTiles(grid.cellsByColumn);
