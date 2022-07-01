@@ -36,9 +36,9 @@ function setupKeyboard() {
 async function handleGesture() {
   const diff = { x: touchEnd.x - touchStart.x, y: touchEnd.y - touchStart.y };
   const debugLog = (touch = "tap") => {
-    debug.innerText = `${touch}, x: ${parseFloat(
-      diff.x.toFixed(2)
-    )}, y: ${parseFloat(diff.y.toFixed(2))}`;
+    // debug.innerText = `${touch}, x: ${parseFloat(
+    //   diff.x.toFixed(2)
+    // )}, y: ${parseFloat(diff.y.toFixed(2))}`;
   };
   if (Math.abs(diff.x) > Math.abs(diff.y)) {
     if (touchEnd.x < touchStart.x) {
