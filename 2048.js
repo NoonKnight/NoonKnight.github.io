@@ -20,13 +20,12 @@ function setupInput() {
   document.addEventListener("touchend", (event) => {
     const touch = event.changedTouches[0];
     touchEnd = { x: touch.clientX, y: touch.clientY };
-    const { x, y } = touchEnd;
-    debug.innerText = `x: ${x - touchStart.x}, y: ${y - touchStart.y}`;
     handleGesture();
   });
 }
 //async
 function handleGesture() {
+  const { x, y } = touchEnd;
   debug.innerText = `x: ${x - touchStart.x}, y: ${y - touchStart.y}`;
   if (touchEnd.x < touchStart.x) {
     console.log("Swiped Left");
