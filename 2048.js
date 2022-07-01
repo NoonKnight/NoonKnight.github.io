@@ -12,8 +12,6 @@ let touchEnd = { x: 0, y: 0 };
 setupInput();
 
 function setupInput() {
-  const { x, y } = touchEnd;
-  debug.innerText = `x: ${x - touchStart.x}, y: ${y - touchStart.y}`;
   window.addEventListener("keydown", handleKeyboard, { once: true });
   document.addEventListener("touchstart", (event) => {
     const touch = event.changedTouches[0];
