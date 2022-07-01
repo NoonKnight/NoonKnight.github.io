@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="./logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#000000" />
-    <meta name="description" content="Progressive Web App - 2048" />
+    <meta name="theme-color" content="#234" />
+    <meta name="description" content="Progressive Web App 2048 • NoonKnight" />
     <link rel="apple-touch-icon" href="./logo.png" />
     <link rel="manifest" href="./manifest.json" />
     <link rel="stylesheet" href="./styles.css" />
@@ -13,16 +13,30 @@
     <title>pwa2048</title>
   </head>
   <body>
-    <div class="edge">
+    <div>
       <div id="board"></div>
     </div>
     <div class="info">
-      <h2>pwa2048</h2>
+      <h2 id="title">pwa2048</h2>
       <h4>Score: <span id="score">0</span></h4>
     </div>
-    <!-- <hr />
-      <div id="debug">no debug, v5</div> -->
+    <div id="footer">
+      <img id="gravatar" alt="NoonKnight gravatar" />
+      <br />
+      <sub>• NoonKnight</sub>
+    </div>
+    <!-- <hr /> -->
+    <!-- <div id="debug">no debug, v5</div> -->
+    <script src="https://cdn.jsdelivr.net/npm/hash-wasm"></script>
     <script>
+      async function gravatar() {
+        const hash = await hashwasm.md5("noonknight@gmail.com");
+        console.log("MD5:", hash);
+        document.getElementById(
+          "gravatar"
+        ).src = `https://en.gravatar.com/avatar/${hash}.png`;
+      }
+      gravatar();
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", (event) => {
           console.log('<addEventListener event="load">');
