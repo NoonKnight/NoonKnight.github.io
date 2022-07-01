@@ -14,14 +14,13 @@ setupInput();
 function setupInput() {
   const { x, y } = touchEnd;
   debug.innerText = `x: ${x - touchStart.x}, y: ${y - touchStart.y}`;
-
   window.addEventListener("keydown", handleKeyboard, { once: true });
-  board.addEventListener("touchstart", (event) => {
-    touch = event.changedTouches[0];
+  document.addEventListener("touchstart", (event) => {
+    const touch = event.changedTouches[0];
     touchStart = { x: touch.clientX, y: touch.clientY };
   });
-  board.addEventListener("touchend", (event) => {
-    touch = event.changedTouches[0];
+  document.addEventListener("touchend", (event) => {
+    const touch = event.changedTouches[0];
     touchEnd = { x: touch.clientX, y: touch.clientY };
     const { x, y } = touchEnd;
     debug.innerText = `x: ${x - touchStart.x}, y: ${y - touchStart.y}`;
