@@ -1,13 +1,15 @@
 import Grid from "./Grid.js";
 import Tile from "./Tile.js";
 
-const board = document.getElementById("board");
-const debug = document.getElementById("debug");
+const boardElement = document.getElementById("board");
+const debugElement = document.getElementById("debug");
+const scoreElement = document.getElementById("score");
 
-const grid = new Grid(board);
-grid.randomEmptyCell().tile = new Tile(board);
-grid.randomEmptyCell().tile = new Tile(board);
-
+const grid = new Grid(boardElement);
+let score = 0;
+score += (grid.randomEmptyCell().tile = new Tile(boardElement)).value;
+score += (grid.randomEmptyCell().tile = new Tile(boardElement)).value;
+scoreElement.innerText = score;
 let touchStart = { x: 0, y: 0 };
 let touchEnd = { x: 0, y: 0 };
 setupTouch();
@@ -124,11 +126,14 @@ async function handleKeyboard(e) {
 }
 function postMove() {
   grid.cells.forEach((cell) => cell.mergeTiles());
-  const newTile = new Tile(board);
-  grid.randomEmptyCell().tile = newTile;
+  const newTile = new Tile(boardElement);
+  score += newTile.value;
+  scoreElement.innerText = score;
+  const newCell = grid.randomEmptyCell();
+  newCell.tile = newTile;
   if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
     newTile.waitForTransition(true).then(() => {
-      alert("You lose");
+      alert("Game Over!");
     });
     return;
   }

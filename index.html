@@ -13,11 +13,15 @@
     <title>pwa2048</title>
   </head>
   <body>
-    <div>
+    <div class="edge">
       <div id="board"></div>
-      <!-- <hr />
-      <div id="debug">no debug, v5</div> -->
     </div>
+    <div class="info">
+      <h2>pwa2048</h2>
+      <h4>Score: <span id="score">0</span></h4>
+    </div>
+    <!-- <hr />
+      <div id="debug">no debug, v5</div> -->
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", (event) => {
