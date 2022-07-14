@@ -1,0 +1,15 @@
+{
+  "short_name": "pwa2048",
+  "name": "Progressive Web App 2048 • NoonKnight",
+  "icons": [
+    {
+      "src": "logo.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#234",
+  "background_color": "#ffffff"
+}
