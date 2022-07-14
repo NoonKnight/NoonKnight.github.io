@@ -2,17 +2,17 @@ const CACHE_NAME = "version-1";
 const urlsToCache = ["index.html", "offline.html"];
 
 self.addEventListener("install", (event) => {
-  console.log('<addEventListener event="install" />');
+  console.log("<addEventListener_install>");
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       console.log(`<caches open="${CACHE_NAME}" />`);
       return cache.addAll(urlsToCache);
     })
   );
-  // console.log("</addEventListener>");
+  console.log("</addEventListener_install>");
 });
 self.addEventListener("activate", (event) => {
-  console.log('<addEventListener event="activate" />');
+  console.log("<addEventListener_activate>");
   const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
     caches.keys().then((cacheNames) =>
@@ -25,10 +25,10 @@ self.addEventListener("activate", (event) => {
       )
     )
   );
-  console.log("</addEventListener>");
+  console.log("</addEventListener_activate>");
 });
 self.addEventListener("fetch", (event) => {
-  console.log('<addEventListener event="fetch">');
+  console.log("<addEventListener_fetch>");
   event.respondWith(
     caches
       .match(event.request)
@@ -39,5 +39,5 @@ self.addEventListener("fetch", (event) => {
         return caches.match("offline.html");
       })
   );
-  console.log("</addEventListener>");
+  console.log("</addEventListener_fetch>");
 });
