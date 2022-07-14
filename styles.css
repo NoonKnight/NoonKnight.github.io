@@ -31,13 +31,15 @@ h2 {
 
 a {
     /* background-image: linear-gradient(to right,#25252500,#0e264d); */
+    background-color: #25252522;
     border-radius: 10px;
     padding: .5em 1em;
     margin-top: .5em;
     font-size: 1.25rem;
     color: #eee;
     text-decoration: none;
-    border: 3px solid #234;
+    /* border: 3px solid #234; */
+    transition: background-color 250ms;
 }
 
 a:hover,
