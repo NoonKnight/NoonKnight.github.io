@@ -33,13 +33,14 @@ body {
   padding: 2vmin;
   font-size: 50%;
 }
-#noonknight-link {
+.footer-link {
   color: white;
 }
-#noonknight-link:hover {
-  background-color: blue;
+.footer-link:hover {
+  background-color: darkslategray;
 }
-#noonknight-link:visited {
+.footer-link:active,
+.footer-link:visited {
   color: yellow;
 }
 .info {

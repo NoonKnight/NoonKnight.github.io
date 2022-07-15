@@ -47,8 +47,13 @@ a:active {
     background-color: #325a9c;
 }
 
-
-.game-list {
+.app-list {
     display: flex;
     flex-direction: column;
+}
+
+.app-desc {
+    font-size: 90%;
+    margin-top: 1em;
+    margin-bottom: 2em;
 }

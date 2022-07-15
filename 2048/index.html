@@ -21,10 +21,10 @@
       <h4>Score: <span id="score">0</span></h4>
     </div>
     <div id="footer">
-      <a href="http://noonknight.com" id="noonknight-link">
+      <a href="http://noonknight.com" class="footer-link">
         <img id="gravatar" alt="NoonKnight gravatar" />
         <br />
-        <sub>noonknight.com</sub>
+        noonknight.com
       </a>
     </div>
     <!-- <hr /> -->
@@ -36,7 +36,7 @@
         console.log("MD5:", hash);
         document.getElementById(
           "gravatar"
-        ).src = `https://en.gravatar.com/avatar/${hash}?s=80`;
+        ).src = `https://en.gravatar.com/avatar/${hash}?s=96`;
       }
       gravatar();
       if ("serviceWorker" in navigator) {
