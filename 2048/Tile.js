@@ -1,7 +1,7 @@
 export default class Tile {
   #tileElement;
-  #y;
-  #x;
+  // #y;
+  // #x;
   #value;
   constructor(tileContainer, value = Math.random() > 0.1 ? 2 : 4) {
     this.#tileElement = document.createElement("div");
@@ -28,11 +28,11 @@ export default class Tile {
     );
   }
   set y(value) {
-    this.#y = value;
+    // this.#y = value;
     this.#tileElement.style.setProperty("--y", value);
   }
   set x(value) {
-    this.#x = value;
+    // this.#x = value;
     this.#tileElement.style.setProperty("--x", value);
   }
   remove() {

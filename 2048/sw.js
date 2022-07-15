@@ -1,5 +1,15 @@
-const CACHE_NAME = "version-1";
-const urlsToCache = ["index.html", "offline.html"];
+// making a change to this file will cause the pwa to
+// update, i.e. changing CACHE_NAME/version
+const CACHE_NAME = "v2";
+const urlsToCache = [
+  "index.html",
+  "offline.html",
+  "styles.css",
+  "2048.js",
+  "Grid.js",
+  "logo.png",
+  "Tile.js",
+];
 
 self.addEventListener("install", (event) => {
   console.log("<addEventListener_install>");
